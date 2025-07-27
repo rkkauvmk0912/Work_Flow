@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Girl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientWave 15s ease infinite;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Surprise Page Styles */
+        .surprise-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 100;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .surprise-page.hidden {
+            display: none;
+        }
+
+        .surprise-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .surprise-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: subtitleFloat 2s ease-in-out infinite;
+        }
+
+        .surprise-button {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #ff6b9d 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: buttonGlow 3s ease-in-out infinite;
+            margin-bottom: 50px;
+        }
+
+        .surprise-button:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+        }
+
+        .surprise-button:active {
+            transform: scale(0.95);
+        }
+
+        .countdown-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .countdown-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .countdown-text {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: countdownPulse 1s ease-in-out infinite;
+        }
+
+        .countdown-timer {
+            font-size: 72px;
+            font-weight: 700;
+            color: #ff6b9d;
+            text-shadow: 0 4px 20px rgba(255, 107, 157, 0.5);
+            animation: timerBeat 1s ease-in-out infinite;
+            margin-bottom: 30px;
+        }
+
+        .countdown-message {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: messageGlow 2s ease-in-out infinite alternate;
+        }
+
+        /* Testimonial Page Styles */
+        .testimonial-page {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .testimonial-page.visible {
+            display: flex;
+            opacity: 1;
+            animation: testimonialFadeIn 1.5s ease-out;
+        }
+
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+            to {
+                text-shadow: 
+                    0 4px 20px rgba(0, 0, 0, 0.3),
+                    0 0 30px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            }
+            50% {
+                box-shadow: 
+                    0 10px 30px rgba(255, 107, 157, 0.4),
+                    0 0 40px rgba(255, 107, 157, 0.3);
+            }
+        }
+
+        @keyframes countdownPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes timerBeat {
+            0%, 100% {
+                transform: scale(1);
+                color: #ff6b9d;
+            }
+            50% {
+                transform: scale(1.1);
+                color: #ff8fab;
+            }
+        }
+
+        @keyframes messageGlow {
+            from {
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+            to {
+                text-shadow: 
+                    0 2px 10px rgba(0, 0, 0, 0.2),
+                    0 0 20px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        @keyframes testimonialFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+            pointer-events: none;
+            animation: lightFloat 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            animation: patternMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatUp 15s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+
+        .shape:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            left: 20%;
+            animation-delay: -2s;
+            animation-duration: 14s;
+        }
+
+        .shape:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            left: 30%;
+            animation-delay: -4s;
+            animation-duration: 16s;
+        }
+
+        .shape:nth-child(4) {
+            width: 18px;
+            height: 18px;
+            left: 40%;
+            animation-delay: -6s;
+            animation-duration: 13s;
+        }
+
+        .shape:nth-child(5) {
+            width: 22px;
+            height: 22px;
+            left: 50%;
+            animation-delay: -8s;
+            animation-duration: 15s;
+        }
+
+        .shape:nth-child(6) {
+            width: 16px;
+            height: 16px;
+            left: 60%;
+            animation-delay: -10s;
+            animation-duration: 11s;
+        }
+
+        .shape:nth-child(7) {
+            width: 24px;
+            height: 24px;
+            left: 70%;
+            animation-delay: -12s;
+            animation-duration: 17s;
+        }
+
+        .shape:nth-child(8) {
+            width: 19px;
+            height: 19px;
+            left: 80%;
+            animation-delay: -14s;
+            animation-duration: 12s;
+        }
+
+        .shape:nth-child(9) {
+            width: 21px;
+            height: 21px;
+            left: 90%;
+            animation-delay: -16s;
+            animation-duration: 14s;
+        }
+
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 35%, transparent 35%),
+                linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 35%, transparent 35%);
+            background-size: 100px 100px;
+            animation: geometricSlide 25s linear infinite;
+            pointer-events: none;
+        }
+
+        .testimonial-card {
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 255, 248, 0.9) 50%, rgba(240, 255, 240, 0.95) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="leaves" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="%23c8e6c9" opacity="0.3"/><path d="M5,5 Q10,2 15,5 Q12,10 10,15 Q8,10 5,5" fill="%23a5d6a7" opacity="0.2"/><path d="M15,15 Q18,12 20,18 Q15,20 10,18 Q12,15 15,15" fill="%2381c784" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23leaves)"/></svg>');
+            background-size: 400% 400%, 80px 80px;
+            border-radius: 20px;
+            padding: 25px 20px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 1px solid rgba(129, 199, 132, 0.3);
+            animation: fadeInUp 1s ease-out, cardFloat 6s ease-in-out infinite, cardGlow 4s ease-in-out infinite alternate, natureBreeze 12s ease-in-out infinite;
+            backdrop-filter: blur(20px);
+            z-index: 10;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .testimonial-card::before {
+            content: '🌿';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: heartBeat 2s ease-in-out infinite, heartFloat 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card::after {
+            content: '🌸';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: sparkleRotate 3s ease-in-out infinite, sparkleGlow 2s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+        .card-shimmer {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shimmerMove 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-15px) scale(1.02) rotateX(2deg);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.25),
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .testimonial-card:hover::before {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        .testimonial-card:hover::after {
+            transform: scale(1.2) rotate(360deg);
+            opacity: 0.8;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 16px;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid #ffffff;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.25),
+                0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            animation: imageFloat 4s ease-in-out infinite, imagePulse 3s ease-in-out infinite alternate;
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            animation: borderGlow 2s ease-in-out infinite alternate;
+        }
+
+        .testimonial-card:hover .profile-image {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.35),
+                0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card:hover .profile-image::before {
+            opacity: 0.6;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 400;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            animation: textSlideIn 1.5s ease-out 0.5s both, textGlow 4s ease-in-out infinite alternate;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 50px;
+            color: #e2e8f0;
+            position: absolute;
+            top: -25px;
+            left: -35px;
+            font-family: serif;
+            line-height: 1;
+            animation: quoteFloat 3s ease-in-out infinite, quotePulse 2s ease-in-out infinite alternate;
+        }
+
+        .testimonial-text::after {
+            content: '"';
+            font-size: 50px;
+            color: #e2e8f0;
+            position: absolute;
+            bottom: -35px;
+            right: -35px;
+            font-family: serif;
+            line-height: 1;
+            animation: quoteFloat 3s ease-in-out infinite reverse, quotePulse 2s ease-in-out infinite alternate;
+        }
+
+        .cute-message {
+            background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 50%, #f1f8e9 100%);
+            border-radius: 16px;
+            padding: 12px 20px;
+            margin: 15px 0;
+            border-left: 4px solid #66bb6a;
+            position: relative;
+            animation: messageSlideIn 1.2s ease-out 0.8s both, messageBounce 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .cute-message::before {
+            content: '�';
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 4px;
+            border-radius: 50%;
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+
+        .cute-message:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(102, 187, 106, 0.2);
+        }
+
+        .cute-message p {
+            margin: 0;
+            font-size: 14px;
+            color: #2d3748;
+            font-style: italic;
+            animation: textWave 2s ease-in-out infinite;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px;
+            animation: ratingSlideIn 1.8s ease-out 1.2s both;
+        }
+
+        .star {
+            font-size: 22px;
+            color: #f6ad55;
+            text-shadow: 0 2px 4px rgba(246, 173, 85, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            animation: starBounce 2s ease-in-out infinite, starShimmer 3s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .star::before {
+            content: '✦';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            font-size: 14px;
+            color: #f6ad55;
+            animation: starSparkle 2s ease-in-out infinite;
+        }
+
+        .star:nth-child(1) { animation-delay: 0s; }
+        .star:nth-child(2) { animation-delay: 0.2s; }
+        .star:nth-child(3) { animation-delay: 0.4s; }
+        .star:nth-child(4) { animation-delay: 0.6s; }
+        .star:nth-child(5) { animation-delay: 0.8s; }
+
+        .star:nth-child(1)::before { animation-delay: 0.5s; }
+        .star:nth-child(2)::before { animation-delay: 0.7s; }
+        .star:nth-child(3)::before { animation-delay: 0.9s; }
+        .star:nth-child(4)::before { animation-delay: 1.1s; }
+        .star:nth-child(5)::before { animation-delay: 1.3s; }
+
+        .star:hover {
+            transform: scale(1.3) rotate(15deg);
+            color: #ed8936;
+            filter: drop-shadow(0 0 10px #f6ad55);
+        }
+
+        .star:hover::before {
+            transform: translateX(-50%) scale(1) rotate(180deg);
+        }
+
+        .client-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+            position: relative;
+            animation: nameSlideIn 2s ease-out 1.5s both, nameGlow 4s ease-in-out infinite alternate;
+        }
+
+        .client-name::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: translateX(-50%);
+            transition: width 0.8s ease;
+            animation: underlineGlow 3s ease-in-out infinite;
+        }
+
+        .testimonial-card:hover .client-name::after {
+            width: 100%;
+        }
+
+        .client-title {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 400;
+            margin-bottom: 15px;
+            animation: titleSlideIn 2.2s ease-out 1.7s both, titleFloat 3s ease-in-out infinite;
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            animation: tagsSlideIn 2.5s ease-out 2s both;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            animation: tagBounce 2s ease-in-out infinite;
+        }
+
+        .tag:nth-child(1) { animation-delay: 0s; }
+        .tag:nth-child(2) { animation-delay: 0.3s; }
+        .tag:nth-child(3) { animation-delay: 0.6s; }
+
+        .tag:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .like-button {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #ff6b9d 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: buttonPulse 3s ease-in-out infinite;
+        }
+
+        .like-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.4);
+            background: linear-gradient(135deg, #ff8fab 0%, #d63384 50%, #ff8fab 100%);
+        }
+
+        .like-button:active {
+            transform: scale(0.95);
+            animation: buttonExplode 0.6s ease-out;
+        }
+
+        .heart-explosion {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 5;
+        }
+
+        .like-button:active ~ .heart-explosion .floating-heart,
+        .testimonial-card:has(.like-button:active) .floating-heart {
+            animation: heartFloat 2s ease-out forwards;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff6b9d;
+            opacity: 0;
+            transform: translateY(0) scale(0);
+            animation: none;
+        }
+
+        .nature-element {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: floatNature 8s ease-in-out infinite;
+        }
+
+        .nature-element:nth-child(1) {
+            content: '🌿';
+            top: 15%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .nature-element:nth-child(2) {
+            content: '🍀';
+            top: 25%;
+            right: 8%;
+            animation-delay: 2s;
+        }
+
+        .nature-element:nth-child(3) {
+            content: '🌱';
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 4s;
+        }
+
+        .nature-element:nth-child(4) {
+            content: '🌺';
+            top: 60%;
+            right: 15%;
+            animation-delay: 6s;
+        }
+
+        .floating-heart:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-heart:nth-child(2) {
+            left: 20%;
+            animation-delay: 0.1s;
+        }
+
+        .floating-heart:nth-child(3) {
+            left: 30%;
+            animation-delay: 0.2s;
+        }
+
+        .floating-heart:nth-child(4) {
+            left: 40%;
+            animation-delay: 0.3s;
+        }
+
+        .floating-heart:nth-child(5) {
+            left: 50%;
+            animation-delay: 0.4s;
+        }
+
+        .floating-heart:nth-child(6) {
+            left: 60%;
+            animation-delay: 0.5s;
+        }
+
+        .floating-heart:nth-child(7) {
+            left: 70%;
+            animation-delay: 0.6s;
+        }
+
+        .floating-heart:nth-child(8) {
+            left: 80%;
+            animation-delay: 0.7s;
+        }
+
+        .floating-heart:nth-child(9) {
+            left: 90%;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes cardGlow {
+            from {
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.15),
+                    0 10px 20px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+            to {
+                box-shadow: 
+                    0 30px 60px rgba(0, 0, 0, 0.2),
+                    0 15px 30px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                    0 0 30px rgba(102, 126, 234, 0.1);
+            }
+        }
+
+        @keyframes shimmerMove {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes heartFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes sparkleGlow {
+            from {
+                filter: brightness(1);
+            }
+            to {
+                filter: brightness(1.3) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            }
+        }
+
+        @keyframes imageFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes imagePulse {
+            from {
+                filter: brightness(1);
+            }
+            to {
+                filter: brightness(1.05);
+            }
+        }
+
+        @keyframes borderGlow {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes textSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: none;
+            }
+            to {
+                text-shadow: 0 0 10px rgba(74, 85, 104, 0.3);
+            }
+        }
+
+        @keyframes quoteFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes quotePulse {
+            from {
+                opacity: 0.3;
+            }
+            to {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes messageBounce {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-2px);
+            }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% {
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) scale(1.1) rotate(180deg);
+            }
+        }
+
+        @keyframes textWave {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-1px);
+            }
+        }
+
+        @keyframes ratingSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes starBounce {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-5px) scale(1.05);
+            }
+        }
+
+        @keyframes starShimmer {
+            from {
+                text-shadow: 0 2px 4px rgba(246, 173, 85, 0.3);
+            }
+            to {
+                text-shadow: 
+                    0 2px 4px rgba(246, 173, 85, 0.5),
+                    0 0 10px rgba(246, 173, 85, 0.3);
+            }
+        }
+
+        @keyframes starSparkle {
+            0%, 100% {
+                transform: translateX(-50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-50%) scale(1) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes nameSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes nameGlow {
+            from {
+                text-shadow: none;
+            }
+            to {
+                text-shadow: 0 0 10px rgba(45, 55, 72, 0.3);
+            }
+        }
+
+        @keyframes underlineGlow {
+            0%, 100% {
+                box-shadow: none;
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+            }
+        }
+
+        @keyframes titleSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-2px);
+            }
+        }
+
+        @keyframes tagsSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes tagBounce {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes gradientWave {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes lightFloat {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(-10px) translateX(-15px);
+            }
+            75% {
+                transform: translateY(-25px) translateX(5px);
+            }
+        }
+
+        @keyframes patternMove {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50px, -50px) rotate(360deg);
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes geometricSlide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100px);
+            }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes sparkleRotate {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0) rotate(0deg);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-30px) scale(1) rotate(72deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.5) rotate(360deg);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+            }
+        }
+
+        @keyframes buttonExplode {
+            0% {
+                transform: scale(0.95);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1) rotate(15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-150px) scale(0.5) rotate(180deg);
+            }
+        }
+
+        @keyframes natureBreeze {
+            0%, 100% {
+                background-position: 0% 0%, 0% 0%;
+            }
+            25% {
+                background-position: 20% 10%, 10% 5%;
+            }
+            50% {
+                background-position: 40% 20%, 20% 10%;
+            }
+            75% {
+                background-position: 60% 10%, 15% 8%;
+            }
+        }
+
+        @keyframes floatNature {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-8px) translateX(3px) rotate(5deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-5px) translateX(-2px) rotate(-3deg);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-10px) translateX(1px) rotate(2deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .testimonial-card {
+                padding: 20px 18px;
+                max-width: 400px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .testimonial-text {
+                font-size: 13px;
+            }
+
+            .star {
+                font-size: 20px;
+            }
+
+            .client-name {
+                font-size: 18px;
+            }
+
+            .client-title {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimonial-card {
+                padding: 18px 15px;
+                max-width: 320px;
+            }
+
+            .profile-image {
+                width: 130px;
+                height: 130px;
+                border-radius: 14px;
+                border: 3px solid #ffffff;
+            }
+
+            .profile-image::before {
+                top: -3px;
+                left: -3px;
+                right: -3px;
+                bottom: -3px;
+                border-radius: 14px;
+            }
+
+            .testimonial-text {
+                font-size: 12px;
+            }
+
+            .star {
+                font-size: 18px;
+            }
+
+            .client-name {
+                font-size: 16px;
+            }
+
+            .client-title {
+                font-size: 12px;
+            }
+
+            .tags {
+                gap: 5px;
+            }
+
+            .tag {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+
+            .like-button {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Surprise Page -->
+    <div class="surprise-page" id="surprisePage">
+        <h1 class="surprise-title">🎉 Special Surprise! 🎉</h1>
+        <p class="surprise-subtitle">Something amazing is waiting for you...</p>
+        <button class="surprise-button" onclick="startCountdown()">
+            ✨ Click here to see the surprise! ✨
+        </button>
+        
+        <div class="countdown-container" id="countdownContainer">
+            <p class="countdown-text">Get ready in...</p>
+            <div class="countdown-timer" id="countdownTimer">5</div>
+            <p class="countdown-message">Something beautiful is coming! 💖</p>
+        </div>
+    </div>
+
+    <!-- Testimonial Page -->
+    <div class="testimonial-page" id="testimonialPage">
+        <!-- Background Elements -->
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        
+        <div class="geometric-bg"></div>
+        
+        <div class="testimonial-card">
+            <div class="card-shimmer"></div>
+            
+            <!-- Nature Elements -->
+            <div class="nature-element" style="top: 15%; left: 5%;">🌿</div>
+            <div class="nature-element" style="top: 25%; right: 8%;">🍀</div>
+            <div class="nature-element" style="bottom: 20%; left: 10%;">🌱</div>
+            <div class="nature-element" style="top: 60%; right: 15%;">🌺</div>
+            <div class="nature-element" style="top: 40%; left: 85%;">🦋</div>
+            <div class="nature-element" style="bottom: 40%; right: 5%;">🌼</div>
+            
+            <img src="PreetyLady.jpg" alt="Client Profile" class="profile-image">
+            
+            <div class="cute-message">
+                <p>🌸 "Every little moment with her feels like a page from a fairytale!" 📖💫 🌸</p>
+            </div>
+            
+            <p class="testimonial-text">
+               Ambika, the prettiest girl I’ve ever seen 🌸 – one look at her picture and I can’t help but say “hayye!” 😍 That smile melts me every single day, like sunshine breaking through the clouds ☀️. There’s a sparkle in her eyes ✨ that speaks of warmth and kindness, and an effortless charm that makes her stand out wherever she goes 🌟. Ambika’s laughter is the kind that stays with you 😂, and her cheerful nature can turn even the dullest day into something memorable 🌼. Truly, she’s a bundle of joy wrapped in grace, leaving behind nothing but smiles and good vibes 💖. You’re my special little lady, the one that makes me crazy. Of all the girls I’ve ever known, it’s you, it’s you – my favorite, my favorite, my favorite, my favorite girl, my favorite girl 💕.
+            </p>
+            
+            <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+            </div>
+            
+            <div class="client-name">Ambika Sinha</div>
+            <div class="client-title"></div>
+            
+            <div class="tags">
+                <span class="tag">✨ Creative</span>
+                <span class="tag">🎨 Inspiring</span>
+                <span class="tag">💝 Wonderful</span>
+            </div>
+            
+            <button class="like-button" onclick="createHeartExplosion()">
+                💖 If you like it, click it! 💖
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let countdownInterval;
+
+        function startCountdown() {
+            const surpriseButton = document.querySelector('.surprise-button');
+            const countdownContainer = document.getElementById('countdownContainer');
+            
+            // Hide button and show countdown
+            surpriseButton.style.opacity = '0';
+            surpriseButton.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                surpriseButton.style.display = 'none';
+                countdownContainer.classList.add('visible');
+                
+                // Start countdown
+                let timeLeft = 5;
+                const timerElement = document.getElementById('countdownTimer');
+                
+                countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    timerElement.textContent = timeLeft;
+                    
+                    // Add pulse effect on each countdown
+                    timerElement.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        timerElement.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        showTestimonialPage();
+                    }
+                }, 1000);
+            }, 300);
+        }
+
+        function showTestimonialPage() {
+            const surprisePage = document.getElementById('surprisePage');
+            const testimonialPage = document.getElementById('testimonialPage');
+            
+            // Fade out surprise page
+            surprisePage.style.opacity = '0';
+            surprisePage.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                surprisePage.style.display = 'none';
+                testimonialPage.classList.add('visible');
+            }, 500);
+        }
+
+        function createHeartExplosion() {
+            const card = document.querySelector('.testimonial-card');
+            const heartsContainer = card;
+            
+            // Create multiple hearts
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.className = 'floating-heart';
+                
+                // Random positioning within the card
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                const randomDelay = Math.random() * 0.5;
+                const randomDirection = (Math.random() - 0.5) * 200; // Random horizontal movement
+                
+                heart.style.left = randomX + '%';
+                heart.style.top = randomY + '%';
+                heart.style.animationDelay = randomDelay + 's';
+                
+                // Create unique animation for each heart
+                const animationName = `heartFloat${i}`;
+                const keyframes = `
+                    @keyframes ${animationName} {
+                        0% {
+                            opacity: 0;
+                            transform: translateY(0) translateX(0) scale(0) rotate(0deg);
+                        }
+                        10% {
+                            opacity: 1;
+                            transform: translateY(-20px) translateX(${randomDirection * 0.1}px) scale(1) rotate(15deg);
+                        }
+                        50% {
+                            opacity: 0.8;
+                            transform: translateY(-80px) translateX(${randomDirection * 0.5}px) scale(1.2) rotate(90deg);
+                        }
+                        100% {
+                            opacity: 0;
+                            transform: translateY(-200px) translateX(${randomDirection}px) scale(0.3) rotate(180deg);
+                        }
+                    }
+                `;
+                
+                // Add keyframes to the document
+                const style = document.createElement('style');
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+                
+                // Apply animation
+                heart.style.animation = `${animationName} 3s ease-out forwards`;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                    if (style.parentNode) {
+                        style.parentNode.removeChild(style);
+                    }
+                }, 3000);
+            }
+            
+            // Add button feedback animation
+            const button = document.querySelector('.like-button');
+            button.style.transform = 'scale(0.9)';
+            button.style.background = 'linear-gradient(135deg, #ff1744 0%, #ad1457 50%, #ff1744 100%)';
+            
+            setTimeout(() => {
+                button.style.transform = '';
+                button.style.background = '';
+            }, 200);
+        }
+        
+        // Add some extra sparkle effects
+        function addSparkleEffect() {
+            const sparkles = ['✨', '⭐', '🌟', '💫'];
+            const card = document.querySelector('.testimonial-card');
+            
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.className = 'floating-heart';
+                sparkle.style.color = '#ffd700';
+                sparkle.style.fontSize = '18px';
+                
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                const randomDelay = Math.random() * 0.3;
+                
+                sparkle.style.left = randomX + '%';
+                sparkle.style.top = randomY + '%';
+                sparkle.style.animationDelay = randomDelay + 's';
+                sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+                
+                card.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 2000);
+            }
+        }
+        
+        // Enhanced button click with sparkles
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.querySelector('.like-button');
+            if (button) {
+                button.addEventListener('click', function() {
+                    setTimeout(addSparkleEffect, 500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
