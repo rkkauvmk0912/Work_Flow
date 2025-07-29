@@ -15,6 +15,7 @@
             box-sizing: border-box;
         }
 
+        /* Body is back to original state to keep surprise page centered */
         body {
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -138,10 +139,21 @@
             overflow-x: hidden;
         }
 
+        /* UPDATED RULE FOR RESPONSIVENESS */
         .testimonial-page.visible {
             display: flex;
             opacity: 1;
             animation: testimonialFadeIn 1.5s ease-out;
+            
+            /* New lines for responsiveness */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; /* This adds the scrollbar ONLY when needed */
+            padding-top: 60px;   /* Adds space at the top */
+            padding-bottom: 60px; /* Adds space at the bottom */
         }
 
         @keyframes titleGlow {
@@ -354,6 +366,7 @@
             pointer-events: none;
         }
 
+        /* UPDATED CARD MARGIN */
         .testimonial-card {
             background: 
                 linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 255, 248, 0.9) 50%, rgba(240, 255, 240, 0.95) 100%),
@@ -375,7 +388,7 @@
             backdrop-filter: blur(20px);
             z-index: 10;
             overflow: hidden;
-            margin: 20px auto;
+            margin: 0 auto; /* Let the parent's padding handle vertical space */
         }
 
         .testimonial-card::before {
@@ -525,7 +538,7 @@
         }
 
         .cute-message::before {
-            content: '�';
+            content: '💖';
             position: absolute;
             left: -12px;
             top: 50%;
@@ -1331,7 +1344,6 @@
     </style>
 </head>
 <body>
-    <!-- Surprise Page -->
     <div class="surprise-page" id="surprisePage">
         <h1 class="surprise-title">🎉 Special Surprise! 🎉</h1>
         <p class="surprise-subtitle">Something amazing is waiting for you...</p>
@@ -1346,9 +1358,7 @@
         </div>
     </div>
 
-    <!-- Testimonial Page -->
     <div class="testimonial-page" id="testimonialPage">
-        <!-- Background Elements -->
         <div class="floating-shapes">
             <div class="shape"></div>
             <div class="shape"></div>
@@ -1366,7 +1376,6 @@
         <div class="testimonial-card">
             <div class="card-shimmer"></div>
             
-            <!-- Nature Elements -->
             <div class="nature-element" style="top: 15%; left: 5%;">🌿</div>
             <div class="nature-element" style="top: 25%; right: 8%;">🍀</div>
             <div class="nature-element" style="bottom: 20%; left: 10%;">🌱</div>
@@ -1381,7 +1390,7 @@
             </div>
             
             <p class="testimonial-text">
-               Ambika, the prettiest girl I’ve ever seen 🌸 – one look at her picture and I can’t help but say “hayye!” 😍 That smile melts me every single day, like sunshine breaking through the clouds ☀️. There’s a sparkle in her eyes ✨ that speaks of warmth and kindness, and an effortless charm that makes her stand out wherever she goes 🌟. Ambika’s laughter is the kind that stays with you 😂, and her cheerful nature can turn even the dullest day into something memorable 🌼. Truly, she’s a bundle of joy wrapped in grace, leaving behind nothing but smiles and good vibes 💖. You’re my special little lady, the one that makes me crazy. Of all the girls I’ve ever known, it’s you, it’s you – my favorite, my favorite, my favorite, my favorite girl, my favorite girl 💕.
+                Ambika, the prettiest girl I’ve ever seen 🌸 – one look at her picture and I can’t help but say “hayye!” 😍 That smile melts me every single day, like sunshine breaking through the clouds ☀️. There’s a sparkle in her eyes ✨ that speaks of warmth and kindness, and an effortless charm that makes her stand out wherever she goes 🌟. Ambika’s laughter is the kind that stays with you 😂, and her cheerful nature can turn even the dullest day into something memorable 🌼. Truly, she’s a bundle of joy wrapped in grace, leaving behind nothing but smiles and good vibes 💖. You’re my special little lady, the one that makes me crazy. Of all the girls I’ve ever known, it’s you, it’s you – my favorite, my favorite, my favorite, my favorite girl, my favorite girl 💕.
             </p>
             
             <div class="rating">
